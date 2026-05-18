@@ -1,0 +1,9 @@
+string file_path
+---
+bool success
+string raw_text
+string target_object
+string[] actions
+string source_location
+string target_location
+string message

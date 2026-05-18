@@ -1,0 +1,72 @@
+table_surfaces:
+  table_1:
+    frame_id: world
+    x: -1.5
+    y: -1.5
+    z: 0.505
+
+  table_2:
+    frame_id: world
+    x: -1.0
+    y: -1.5
+    z: 0.505
+
+  table_3:
+    frame_id: world
+    x: -0.5
+    y: -1.5
+    z: 0.505
+
+  table_4:
+    frame_id: world
+    x: 0.0
+    y: -1.5
+    z: 0.505
+
+  table_5:
+    frame_id: world
+    x: 0.5
+    y: -1.5
+    z: 0.505
+
+  table_6:
+    frame_id: world
+    x: 1.0
+    y: -1.5
+    z: 0.505
+
+  table_7:
+    frame_id: world
+    x: -1.5
+    y: 1.5
+    z: 0.505
+
+  table_8:
+    frame_id: world
+    x: -1.0
+    y: 1.5
+    z: 0.505
+
+  table_9:
+    frame_id: world
+    x: -0.5
+    y: 1.5
+    z: 0.505
+
+  table_10:
+    frame_id: world
+    x: 0.0
+    y: 1.5
+    z: 0.505
+
+  table_11:
+    frame_id: world
+    x: 0.5
+    y: 1.5
+    z: 0.505
+
+  table_12:
+    frame_id: world
+    x: 1.0
+    y: 1.5
+    z: 0.505

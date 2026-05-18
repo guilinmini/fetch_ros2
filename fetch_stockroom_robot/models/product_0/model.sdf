@@ -1,0 +1,45 @@
+<?xml version='1.0'?>
+<sdf version ='1.4'>
+  <model name ='product_0'>
+    <link name ='link'>
+      <inertial>
+        <mass>0.05</mass>
+        <inertia>
+          <ixx>0.0000417</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0000417</iyy>
+          <iyz>0</iyz>
+          <izz>0.0000417</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box><size>0.05 0.05 0.05</size></box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>30.0</mu>
+              <mu2>30.0</mu2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <kp>1000000.0</kp>
+              <kd>100.0</kd>
+              <max_vel>1.0</max_vel>
+              <min_depth>0.002</min_depth>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box><size>0.05 0.05 0.05</size></box>
+        </geometry>
+        <material><ambient>0.0 0.8 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse></material>
+      </visual>
+    </link>
+  </model>
+</sdf>

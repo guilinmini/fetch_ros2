@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>fetch_stockroom_robot</name>
+  <version>0.0.1</version>
+  <description>Stockroom Ignition Gazebo world and models for Fetch simulation.</description>
+
+  <maintainer email="ubuntu1804@todo.todo">ubuntu1804</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>fetch_gazebo</exec_depend>
+  <exec_depend>fetch_moveit_config</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>robot</exec_depend>
+  <exec_depend>ros_gz_bridge</exec_depend>
+  <exec_depend>ros_gz_sim</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+    <gazebo_ros gazebo_model_path="${prefix}/models" gazebo_media_path="${prefix}/models"/>
+  </export>
+</package>

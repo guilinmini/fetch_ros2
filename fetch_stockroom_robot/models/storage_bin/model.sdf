@@ -1,0 +1,48 @@
+<?xml version='1.0'?>
+<sdf version ='1.4'>
+  <model name ='storage_bin'>
+    <static>true</static> 
+    <!-- static标签强制Gazebo不去计算模型的动态变化，以节省CPU计算资源 -->
+    <link name ='bottom'> 
+      <collision name="collision_bottom">
+        <geometry>
+          <box>
+            <size>0.4 0.4 0.02</size> <!-- 40cm×40cm×2cm的box -->
+          </box>
+        </geometry>
+      </collision>
+      <collision name="collision_left"> 
+        <pose>-0.2 0 0.005 0 0 0</pose>
+        <geometry><box><size>0.02 0.4 0.01</size></box></geometry>
+      </collision>
+      <collision name="collision_right">
+        <pose>0.2 0 0.005 0 0 0</pose>
+        <geometry><box><size>0.02 0.4 0.01</size></box></geometry>
+      </collision>
+      <collision name="collision_back">
+        <pose>0 0.2 0.1 0 0 0</pose>
+        <geometry><box><size>0.4 0.02 0.2</size></box></geometry>
+      </collision>
+   
+      <visual name="visual_bottom">
+        <geometry><box><size>0.4 0.4 0.02</size></box></geometry>
+        <material><ambient>0.0 0.0 0.8 1</ambient><diffuse>0.0 0.0 0.8 1</diffuse></material>
+      </visual>
+      <visual name="visual_left">
+        <pose>-0.2 0 0.005 0 0 0</pose>
+        <geometry><box><size>0.02 0.4 0.01</size></box></geometry>
+        <material><ambient>0.0 0.0 0.8 1</ambient><diffuse>0.0 0.0 0.8 1</diffuse></material>
+      </visual>
+      <visual name="visual_right">
+        <pose>0.2 0 0.005 0 0 0</pose>
+        <geometry><box><size>0.02 0.4 0.01</size></box></geometry>
+        <material><ambient>0.0 0.0 0.8 1</ambient><diffuse>0.0 0.0 0.8 1</diffuse></material>
+      </visual>
+      <visual name="visual_back">
+        <pose>0 0.2 0.1 0 0 0</pose>
+        <geometry><box><size>0.4 0.02 0.2</size></box></geometry>
+        <material><ambient>0.0 0.0 0.8 1</ambient><diffuse>0.0 0.0 0.8 1</diffuse></material>
+      </visual>
+    </link>
+  </model>
+</sdf>

@@ -1,0 +1,71 @@
+table_1:
+  frame_id: map
+  x: -1.25
+  y: -0.75
+  yaw: -1.57
+
+table_2:
+  frame_id: map
+  x: -1.0
+  y: -0.75
+  yaw: -1.57
+
+table_3:
+  frame_id: map
+  x: -0.5
+  y: -0.75
+  yaw: -1.57
+
+table_4:
+  frame_id: map
+  x: 0.0
+  y: -0.75
+  yaw: -1.57
+
+table_5:
+  frame_id: map
+  x: 0.5
+  y: -0.75
+  yaw: -1.57
+
+table_6:
+  frame_id: map
+  x: 1.0
+  y: -0.75
+  yaw: -1.57
+
+table_7:
+  frame_id: map
+  x: -1.25
+  y: 0.75
+  yaw: 1.57
+
+table_8:
+  frame_id: map
+  x: -1.0
+  y: 0.75
+  yaw: 1.57
+
+table_9:
+  frame_id: map
+  x: -0.5
+  y: 0.75
+  yaw: 1.57
+
+table_10:
+  frame_id: map
+  x: 0.0
+  y: 0.75
+  yaw: 1.57
+
+table_11:
+  frame_id: map
+  x: 0.5
+  y: 0.75
+  yaw: 1.57
+
+table_12:
+  frame_id: map
+  x: 1.0
+  y: 0.75
+  yaw: 1.57

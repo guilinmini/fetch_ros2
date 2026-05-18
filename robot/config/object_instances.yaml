@@ -1,0 +1,60 @@
+objects:
+  glue:
+    display_name: "胶水"
+    model_name: "obj_glue"
+    table: "table_1"
+
+  book:
+    display_name: "书本"
+    model_name: "obj_book"
+    table: "table_2"
+
+  ball:
+    display_name: "小球"
+    model_name: "obj_ball"
+    table: "table_1"
+
+  tissue:
+    display_name: "纸巾"
+    model_name: "obj_tissue"
+    table: "table_4"
+
+  snack:
+    display_name: "零食"
+    model_name: "obj_snack"
+    table: "table_5"
+
+  cup:
+    display_name: "水杯"
+    model_name: "obj_cup"
+    table: "table_6"
+
+  parcel:
+    display_name: "快递盒"
+    model_name: "obj_parcel"
+    table: "table_7"
+
+  scissors:
+    display_name: "剪刀"
+    model_name: "obj_scissors"
+    table: "table_8"
+
+  pencil:
+    display_name: "铅笔"
+    model_name: "obj_pencil"
+    table: "table_9"
+
+  coat:
+    display_name: "外套"
+    model_name: "obj_coat"
+    table: "table_10"
+
+  mouse:
+    display_name: "鼠标"
+    model_name: "obj_mouse"
+    table: "table_11"
+
+  charger:
+    display_name: "充电器"
+    model_name: "obj_charger"
+    table: "table_12"

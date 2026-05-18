@@ -1,0 +1,46 @@
+enable_manipulation: true
+move_group_name: arm_with_torso
+base_frame: base_link
+planning_world_frame: world
+planning_scene_frame: odom
+startup_scene_delay: 8.0
+post_navigation_scene_delay: 0.2
+gripper_action_name: /gripper_controller/gripper_action
+gripper_link_name: gripper_link
+planning_time: 8.0
+num_planning_attempts: 10
+allow_replanning: true
+max_velocity_scaling_factor: 0.2
+max_acceleration_scaling_factor: 0.15
+goal_position_tolerance: 0.01
+goal_orientation_tolerance: 0.08
+grasp_roll: 0.0
+grasp_pitch: 1.5708
+grasp_yaw: 0.0
+pregrasp_clearance: 0.12
+place_clearance: 0.12
+postgrasp_lift: 0.10
+gripper_target_standoff: 0.12
+approach_distance: 0.10
+approach_style: top_down
+top_down_xy_offset: 0.14
+top_down_grasp_z_offset: 0.08
+edge_table_x_offset: 0.12
+object_center_height: 0.03
+gripper_opening: 0.10
+gripper_closed: 0.0
+gripper_effort: 60.0
+gripper_wait_timeout: 8.0
+held_object_offset:
+  x: 0.0
+  y: 0.0
+  z: -0.01
+stow_named_targets:
+  - stow
+  - tuck
+  - tucked
+  - home
+carry_named_targets:
+  - ready
+  - carry
+  - home
