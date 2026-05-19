@@ -10,7 +10,6 @@ import base64
 import hmac
 import hashlib
 import tempfile
-import rospkg
 import subprocess
 import threading
 from datetime import datetime
@@ -23,16 +22,22 @@ except ImportError:
 
 import websocket
 
+try:
+    from ament_index_python.packages import get_package_share_directory
+except Exception:
+    get_package_share_directory = None
+
 
 
 def resolve_config_path():
-    try:
-        package_path = rospkg.RosPack().get_path("robot")
-        config_path = os.path.join(package_path, "config", "iflytek_asr.json")
-        if os.path.exists(config_path):
-            return config_path
-    except Exception:
-        pass
+    if get_package_share_directory is not None:
+        try:
+            package_path = get_package_share_directory("robot")
+            config_path = os.path.join(package_path, "config", "iflytek_asr.json")
+            if os.path.exists(config_path):
+                return config_path
+        except Exception:
+            pass
 
     return os.path.join(os.path.dirname(os.path.abspath(__file__)), "config", "iflytek_asr.json")
 

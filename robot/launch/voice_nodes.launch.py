@@ -26,6 +26,8 @@ def generate_launch_description():
             parameters=[{
                 'use_sim_time': True,
                 'fallback_text': '从一号桌抓取胶水放到六号桌',
+                'record_seconds': 5.0,
+                'record_device': '',
             }],
         ),
         Node(

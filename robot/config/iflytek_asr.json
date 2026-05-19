@@ -1,0 +1,11 @@
+{
+    "APPID": "**",
+    "APIKey": "**",
+    "APISecret": "***",
+    "host": "**",
+    "request_path": "**",
+    "language": "zh_cn",
+    "domain": "**",
+    "accent": "***",
+    "sample_rate": 16000
+}
