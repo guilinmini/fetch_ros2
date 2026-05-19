@@ -14,10 +14,10 @@ def generate_launch_description():
         DeclareLaunchArgument('world', default_value='aisle.world'),
         DeclareLaunchArgument('gui', default_value='true'),
         DeclareLaunchArgument('use_ros2_control', default_value='true'),
-        DeclareLaunchArgument('x', default_value='-1.25'),
-        DeclareLaunchArgument('y', default_value='-0.75'),
+        DeclareLaunchArgument('x', default_value='0.0'),
+        DeclareLaunchArgument('y', default_value='0.0'),
         DeclareLaunchArgument('z', default_value='0.05'),
-        DeclareLaunchArgument('yaw', default_value='-1.57'),
+        DeclareLaunchArgument('yaw', default_value='0.0'),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(
                 fetch_gazebo, 'launch', 'simulation.launch.py')),

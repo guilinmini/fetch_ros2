@@ -32,6 +32,12 @@ ros2 launch robot voice_fetch_task.launch.py moveit_rviz:=true
 ros2 service call /run_voice_task robot/srv/SpeechNLUSrv "{file_path: 'src/robot/test.wav'}"
 ```
 
+or 空语音，会默认从从一号桌抓取物体放到六号桌
+
+```bash
+ros2 service call /run_voice_task robot/srv/SpeechNLUSrv "{file_path: ''}"
+```
+
 成功响应示例：
 
 ```text

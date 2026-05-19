@@ -937,8 +937,8 @@ class TaskDispatcher(Node):
         goal.request.planner_id = 'RRTConnectkConfigDefault'
         goal.request.num_planning_attempts = 8
         goal.request.allowed_planning_time = 8.0
-        goal.request.max_velocity_scaling_factor = 0.45
-        goal.request.max_acceleration_scaling_factor = 0.35
+        goal.request.max_velocity_scaling_factor = 0.8
+        goal.request.max_acceleration_scaling_factor = 0.6
         goal.request.goal_constraints = goal_constraints
         goal.planning_options.plan_only = False
         goal.planning_options.replan = True

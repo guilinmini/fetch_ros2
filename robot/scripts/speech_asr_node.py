@@ -16,7 +16,7 @@ from robot.srv import SpeechSrv
 class SpeechASRNode(Node):
     def __init__(self):
         super().__init__('speech_asr_node')
-        self.declare_parameter('fallback_text', '从一号桌抓取胶水放到二号桌')
+        self.declare_parameter('fallback_text', '从一号桌抓取胶水放到六号桌')
         self.declare_parameter('python3_bin', '/usr/bin/python3')
         self.robot_share = get_package_share_directory('robot')
         self.iflytek_script = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), 'iflytek_recognize.py')

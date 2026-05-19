@@ -25,7 +25,7 @@ def generate_launch_description():
             output='screen',
             parameters=[{
                 'use_sim_time': True,
-                'fallback_text': '从一号桌抓取胶水放到二号桌',
+                'fallback_text': '从一号桌抓取胶水放到六号桌',
             }],
         ),
         Node(
