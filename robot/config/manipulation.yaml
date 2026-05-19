@@ -1,8 +1,8 @@
 enable_manipulation: true
-move_group_name: arm_with_torso
+move_group_name: arm
 base_frame: base_link
 planning_world_frame: world
-planning_scene_frame: odom
+planning_scene_frame: base_link
 startup_scene_delay: 8.0
 post_navigation_scene_delay: 0.2
 gripper_action_name: /gripper_controller/gripper_action
@@ -23,8 +23,8 @@ postgrasp_lift: 0.10
 gripper_target_standoff: 0.12
 approach_distance: 0.10
 approach_style: top_down
-top_down_xy_offset: 0.14
-top_down_grasp_z_offset: 0.08
+top_down_xy_offset: 0.0
+top_down_grasp_z_offset: 0.03
 edge_table_x_offset: 0.12
 object_center_height: 0.03
 gripper_opening: 0.10

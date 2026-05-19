@@ -12,7 +12,7 @@ objects:
   ball:
     display_name: "小球"
     model_name: "obj_ball"
-    table: "table_1"
+    table: "table_3"
 
   tissue:
     display_name: "纸巾"

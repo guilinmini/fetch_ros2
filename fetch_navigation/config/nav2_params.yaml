@@ -26,10 +26,10 @@ amcl:
     transform_tolerance: 0.5
     set_initial_pose: true
     initial_pose:
-      x: 0.0
-      y: 0.0
+      x: -1.25
+      y: -0.75
       z: 0.0
-      yaw: 0.0
+      yaw: -1.57
 
 map_server:
   ros__parameters:

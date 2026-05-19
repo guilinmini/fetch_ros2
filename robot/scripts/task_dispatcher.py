@@ -7,7 +7,7 @@ import math
 import rclpy
 from action_msgs.msg import GoalStatus
 from control_msgs.action import FollowJointTrajectory
-from geometry_msgs.msg import Pose
+from geometry_msgs.msg import Pose, PoseStamped
 from moveit_msgs.action import ExecuteTrajectory, MoveGroup
 from moveit_msgs.msg import (
     CollisionObject,
@@ -106,6 +106,7 @@ class TaskDispatcher(Node):
             key: value for key, value in config.items()
             if key.startswith('table_') and isinstance(value, dict) and 'yaw' in value
         }
+        self.move_group_name = str(config.get('move_group_name', 'arm')).strip() or 'arm'
         self.table_surfaces = config.get('table_surfaces', {})
         self.objects = config.get('objects', {})
         self.object_states = self.build_initial_object_states()
@@ -142,6 +143,9 @@ class TaskDispatcher(Node):
             PlanningScene,
             '/planning_scene',
             QoSProfile(depth=1, durability=DurabilityPolicy.TRANSIENT_LOCAL))
+        self.grasp_pose_sub = self.create_subscription(
+            PoseStamped, '/grasp_pose', self.handle_grasp_pose, 10,
+            callback_group=self.callback_group)
         self.nav_client = ActionClient(
             self, NavigateToPose, '/navigate_to_pose',
             callback_group=self.callback_group)
@@ -166,6 +170,7 @@ class TaskDispatcher(Node):
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
         self.scene_published = False
+        self.grasp_pose_busy = False
 
         self.service = self.create_service(
             SpeechNLUSrv, '/run_voice_task', self.handle_run_voice_task,
@@ -174,6 +179,53 @@ class TaskDispatcher(Node):
             self.startup_scene_delay, self.publish_startup_planning_scene_once,
             callback_group=self.callback_group)
         self.get_logger().info('voice task dispatcher ready: /run_voice_task')
+
+    def handle_grasp_pose(self, msg):
+        if self.grasp_pose_busy:
+            self.get_logger().warn('ignore /grasp_pose because a grasp is already running')
+            return
+        self.grasp_pose_busy = True
+        try:
+            ok, message = self.grasp_published_pose(msg)
+            if ok:
+                self.get_logger().info(f'/grasp_pose finished: {message}')
+            else:
+                self.get_logger().error(f'/grasp_pose failed: {message}')
+        except Exception as exc:
+            self.get_logger().error(f'/grasp_pose exception: {exc}')
+        finally:
+            self.grasp_pose_busy = False
+
+    def grasp_published_pose(self, msg):
+        frame_id = (msg.header.frame_id or 'world').strip()
+        if frame_id not in ('world', 'gazebo_world', 'gz_world', 'ign_world'):
+            return False, f'unsupported frame_id for /grasp_pose: {frame_id}; use world'
+
+        target = {
+            'x': float(msg.pose.position.x),
+            'y': float(msg.pose.position.y),
+            'z': float(msg.pose.position.z),
+        }
+        self.get_logger().info(
+            f'/grasp_pose received object center in {frame_id}: '
+            f'x={target["x"]:.3f} y={target["y"]:.3f} z={target["z"]:.3f}')
+
+        self.begin_manipulation_frame()
+        try:
+            if not self.command_head([0.0, 0.35], 1.0):
+                self.get_logger().warn('head command failed, continuing')
+            if not self.command_gripper(0.045):
+                return False, 'open gripper failed'
+            if not self.move_gripper_to_pose_point(target, 'pregrasp'):
+                return False, 'pregrasp MoveIt plan failed'
+            if not self.move_gripper_to_pose_point(target, 'grasp', cartesian=True):
+                return False, 'grasp MoveIt plan failed'
+            if not self.command_gripper(0.0):
+                return False, 'close gripper failed'
+            self.move_arm_to_joint_goal('stow')
+            return True, 'picked published pose'
+        finally:
+            self.clear_manipulation_frame()
 
     def build_initial_object_states(self):
         states = {}
@@ -794,7 +846,7 @@ class TaskDispatcher(Node):
         req.header.frame_id = 'base_link'
         req.header.stamp = self.get_clock().now().to_msg()
         req.start_state.is_diff = True
-        req.group_name = 'arm_with_torso'
+        req.group_name = self.move_group_name
         req.link_name = 'gripper_link'
         req.waypoints = [
             self.make_gripper_pose(
@@ -859,6 +911,9 @@ class TaskDispatcher(Node):
             'wrist_flex_joint',
             'wrist_roll_joint',
         ]
+        if self.move_group_name == 'arm':
+            joint_names = joint_names[1:]
+            positions = positions[1:]
         constraints = Constraints()
         constraints.name = name
         for joint_name, position in zip(joint_names, positions):
@@ -877,7 +932,7 @@ class TaskDispatcher(Node):
             return False
 
         goal = MoveGroup.Goal()
-        goal.request.group_name = 'arm_with_torso'
+        goal.request.group_name = self.move_group_name
         goal.request.pipeline_id = 'ompl'
         goal.request.planner_id = 'RRTConnectkConfigDefault'
         goal.request.num_planning_attempts = 8
