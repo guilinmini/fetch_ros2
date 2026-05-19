@@ -3,6 +3,7 @@
 import time
 import subprocess
 import math
+import shutil
 
 import rclpy
 from action_msgs.msg import GoalStatus
@@ -106,6 +107,8 @@ class TaskDispatcher(Node):
             key: value for key, value in config.items()
             if key.startswith('table_') and isinstance(value, dict) and 'yaw' in value
         }
+        self.enable_audio_feedback = bool(config.get('enable_audio_feedback', True))
+        self.audio_feedback_command = str(config.get('audio_feedback_command', 'spd-say')).strip()
         self.move_group_name = str(config.get('move_group_name', 'arm')).strip() or 'arm'
         self.table_surfaces = config.get('table_surfaces', {})
         self.objects = config.get('objects', {})
@@ -180,6 +183,24 @@ class TaskDispatcher(Node):
             callback_group=self.callback_group)
         self.get_logger().info('voice task dispatcher ready: /run_voice_task')
 
+    def speak_feedback(self, text):
+        if not self.enable_audio_feedback or not text:
+            return
+        command = self.audio_feedback_command
+        if not command:
+            return
+        executable = shutil.which(command)
+        if not executable:
+            self.get_logger().warn(f'audio feedback command not found: {command}')
+            return
+        try:
+            subprocess.Popen(
+                [executable, str(text)],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL)
+        except Exception as exc:
+            self.get_logger().warn(f'audio feedback failed: {exc}')
+
     def handle_grasp_pose(self, msg):
         if self.grasp_pose_busy:
             self.get_logger().warn('ignore /grasp_pose because a grasp is already running')
@@ -223,6 +244,8 @@ class TaskDispatcher(Node):
             if not self.command_gripper(0.0):
                 return False, 'close gripper failed'
             self.move_arm_to_joint_goal('stow')
+            self.get_logger().info('抓取完成')
+            self.speak_feedback('抓取完成')
             return True, 'picked published pose'
         finally:
             self.clear_manipulation_frame()
@@ -389,6 +412,8 @@ class TaskDispatcher(Node):
                 return False, 'close gripper failed'
             self.move_arm_to_joint_goal('stow')
             self.get_logger().info(f'pick done: {object_key}')
+            self.get_logger().info('抓取完成')
+            self.speak_feedback('抓取完成')
             return True, 'picked'
         finally:
             self.clear_manipulation_frame()
@@ -423,6 +448,8 @@ class TaskDispatcher(Node):
             self.move_arm_to_joint_goal('carry')
             self.move_arm_to_joint_goal('stow')
             self.get_logger().info(f'place done: {object_key}')
+            self.get_logger().info('放置完成')
+            self.speak_feedback('放置完成')
             return True, 'placed'
         finally:
             self.clear_manipulation_frame()

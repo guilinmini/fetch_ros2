@@ -1,4 +1,6 @@
 enable_manipulation: true
+enable_audio_feedback: true
+audio_feedback_command: spd-say
 move_group_name: arm
 base_frame: base_link
 planning_world_frame: world
