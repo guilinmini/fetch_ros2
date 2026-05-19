@@ -602,12 +602,12 @@
   </model>
 
 <!-- Voice task objects: loaded with the world to avoid slow runtime spawning. -->
-  <include><name>obj_ball</name><pose>-1.5 -1.5 0.535 0 0 0</pose><uri>model://product_0</uri></include>
+  <include><name>obj_ball</name><pose>-0.5 -1.5 0.535 0 0 0</pose><uri>model://product_0</uri></include>
   <include><name>obj_book</name><pose>-1.0 -1.5 0.535 0 0 0</pose><uri>model://product_0</uri></include>
   <include><name>obj_charger</name><pose>1.0 1.5 0.535 0 0 0</pose><uri>model://product_0</uri></include>
   <include><name>obj_coat</name><pose>0.0 1.5 0.535 0 0 0</pose><uri>model://product_0</uri></include>
   <include><name>obj_cup</name><pose>1.0 -1.5 0.535 0 0 0</pose><uri>model://product_0</uri></include>
-  <include><name>obj_glue</name><pose>-1.42 -1.5 0.535 0 0 0</pose><uri>model://product_0</uri></include>
+  <include><name>obj_glue</name><pose>-1.5 -1.5 0.535 0 0 0</pose><uri>model://product_0</uri></include>
   <include><name>obj_mouse</name><pose>0.5 1.5 0.535 0 0 0</pose><uri>model://product_0</uri></include>
   <include><name>obj_parcel</name><pose>-1.5 1.5 0.535 0 0 0</pose><uri>model://product_0</uri></include>
   <include><name>obj_pencil</name><pose>-0.5 1.5 0.535 0 0 0</pose><uri>model://product_0</uri></include>

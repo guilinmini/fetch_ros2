@@ -9,44 +9,27 @@
 - 默认测试语句为：`从一号桌抓取胶水放到二号桌`。
 - 机器人先导航到源位置，按 ROS1 逻辑把物体世界坐标转换到 `base_link` 后交给 MoveIt2 抓取，再导航到目标位置并放置物体。
 - 任务启动时向 MoveIt2 planning scene 发布桌面和货架碰撞体，抓取目标物体本身不加入碰撞体。
-- Fetch 的 Gazebo 初始关节值和 MoveIt2 `stow/home/ready` 组状态与 ROS1 pick/place 场景一致。
 - 场景启动时直接加载 12 个任务物体：胶水、书本、小球、纸巾、零食、水杯、快递盒、剪刀、铅笔、外套、鼠标、充电器。
 
-## 构建
-
-```bash
-cd /home/slz/ROS2/fetch_ros2
-source /opt/ros/humble/setup.zsh
-colcon build --symlink-install
-source install/setup.zsh
-```
 
 ## 运行
 
-ROS1 原命令：
+在终端启动：
 
 ```bash
-roslaunch robot voice_fetch_task.launch light_mode:=false launch_rviz:=true
-rosservice call /run_voice_task "file_path: '/workspace/src/robot/test.wav'"
+ros2 launch robot voice_fetch_task.launch.py
 ```
 
-ROS2 对应命令：
+or
 
 ```bash
-cd /home/slz/ROS2/fetch_ros2
-source /opt/ros/humble/setup.zsh
-source install/setup.zsh
-ros2 launch robot voice_fetch_task.launch.py
+ros2 launch robot voice_fetch_task.launch.py moveit_rviz:=true
 ```
 
 另开终端调用服务：
 
 ```bash
-cd /home/slz/ROS2/fetch_ros2
-source /opt/ros/humble/setup.zsh
-source install/setup.zsh
-FASTRTPS_DEFAULT_PROFILES_FILE=$PWD/install/robot/share/robot/config/fastdds_no_shm.xml \
-ros2 service call /run_voice_task robot/srv/SpeechNLUSrv "{file_path: '/workspace/src/robot/test.wav'}"
+ros2 service call /run_voice_task robot/srv/SpeechNLUSrv "{file_path: 'src/robot/test.wav'}"
 ```
 
 成功响应示例：
@@ -73,19 +56,3 @@ message='task finished'
 - `/speech_nlu_service`：语义解析服务，类型 `robot/srv/SpeechNLUSrv`。
 - `/run_voice_task`：任务入口服务，类型 `robot/srv/SpeechNLUSrv`。
 - `task_dispatcher.py`：串联 NLU、Nav2、MoveIt2 机械臂规划、夹爪控制和物体放置。
-
-## 验证结果
-
-已验证：
-
-- Gazebo world 启动后直接存在 Fetch、12 个货架 bin、12 个 tag 和 12 个 `obj_*` 任务物体。
-- 调用 `/run_voice_task` 后，机器人到达一号桌，执行抓取胶水动作，到达二号桌接近点并放置胶水。
-- 服务返回 `success=True` 和 `message='task finished'`。
-
-如果启动时出现 FastDDS shared-memory 端口错误，可先清理旧端口再启动：
-
-```bash
-find /dev/shm -maxdepth 1 \( -name 'fastrtps_*' -o -name 'fastrtps_port*' \) -user "$USER" -delete
-ros2 daemon stop
-ros2 daemon start
-```
